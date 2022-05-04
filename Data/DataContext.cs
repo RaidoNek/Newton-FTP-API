@@ -21,5 +21,9 @@ namespace Newton_FTP_API.Data
             // connect to sql server with connection string from app settings
             options.UseSqlServer(Configuration.GetConnectionString("Default"));
         }
+
+        public DbSet<Models.Log> Logs { get; set; }
+        public DbSet<Models.LogType> LogTypes { get; set; }
+        public DbSet<Models.FTP> FTPs { get; set; }
     }
 }
