@@ -15,7 +15,7 @@ namespace Newton_FTP_API.Models
         public string LoginName { get; set; }
         public string LoginPass { get; set; }
         public string Directory { get; set; }
-        public int DaysBackwards { get; set; }
+        public Int64 DaysBackwards { get; set; }
         public string Pattern { get; set; }
         public DateTime ActiveSince { get; set; }
         public DateTime ActiveTo { get; set; }
