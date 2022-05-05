@@ -20,7 +20,7 @@ namespace Newton_FTP_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Models.FTP>>> Get()
+        public async Task<ActionResult<List<DTO.FTP>>> Get()
         {
             return await ftpOperation.GetAllFTPs();
         }

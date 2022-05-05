@@ -14,7 +14,7 @@ namespace Newton_FTP_API.Operations
             this.ftpRepository = ftpRepository;
         }
 
-        public async Task<List<Models.FTP>> GetAllFTPs()
+        public async Task<List<DTO.FTP>> GetAllFTPs()
         {
             var FTPs = await ftpRepository.GetAllFTPs();
             return FTPs;
