@@ -22,7 +22,10 @@ namespace Newton_FTP_API.Repositories
 
         public async Task<Models.LogType> FindById(int id)
         {
-            return await dataContext.LogTypes.FindAsync(id);
+            Models.LogType type = await dataContext.LogTypes.FindAsync(id);
+            if (type == null)
+                throw new Exception("Invalid Type ID");
+            return type;
         }
     }
 }

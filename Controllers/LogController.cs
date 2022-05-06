@@ -34,19 +34,16 @@ namespace Newton_FTP_API.Controllers
         [HttpPost]
         public async Task<ActionResult<DTO.Log>> AddLog([FromForm] DAO.Log log)
         {
-            if (log.TypeId == null)
-                return BadRequest("Invalid TypeId provided");
-            if (log.FtpId == null)
-                return BadRequest("Invalid FtpId provided");
-            if (log.Success == null)
-                return BadRequest("Invalid Success state provided");
-            if (log.Message == null)
-                return BadRequest("Invalid Message provided");
-
             if (log.id == null)
             {
-                var LogModel = await logOperation.AddLog(log);
-                return Ok(await logOperation.Map(LogModel));
+                try
+                {
+                    Models.Log LogModel = await logOperation.AddLog(log);
+                    return Ok(await logOperation.Map(LogModel));
+                } catch(FormatException e)
+                {
+                    return BadRequest(e.Message);
+                }
             } 
             else
             {

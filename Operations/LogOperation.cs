@@ -34,10 +34,12 @@ namespace Newton_FTP_API.Operations
         }
         private async Task<DTO.Log> MapLog(Models.Log log)
         {
-            var Type = await logTypeRepository.FindById(log.TypeId);
-            var FTP = await ftpRepository.FindById(log.FtpId);
+            Models.LogType Type = await logTypeRepository.FindById(log.TypeId);
+            Models.FTP FTP = await ftpRepository.FindById(log.FtpId);
+            if(FTP == null)
+                throw new Exception("Invalid FTP ID");
 
-            var LogDTO = mapper.Map<DTO.Log>(log);
+            DTO.Log LogDTO = mapper.Map<DTO.Log>(log);
             LogDTO.TypeName = Type.Name;
             LogDTO.FTPName = FTP.Name;
 
@@ -61,13 +63,24 @@ namespace Newton_FTP_API.Operations
 
         public async Task<Models.Log> AddLog(DAO.Log log)
         {
-            var Log = await logRepository.AddLog(log);
-            return Log;
+            if (log.TypeId == null)
+                throw new FormatException("Invalid TypeId provided");
+            if (log.FtpId == null)
+                throw new FormatException("Invalid FtpId provided");
+            if (log.Success == null)
+                throw new FormatException("Invalid Success state provided");
+            if (log.Message == null)
+                throw new FormatException("Invalid Message provided");
+
+            return await logRepository.AddLog(log);
         }
 
         public async Task<Models.Log> UpdateLog(DAO.Log targetLog)
         {
-            return await logRepository.Update(await logRepository.FindById((int)targetLog.id), targetLog);
+            Models.Log log = await logRepository.FindById((int)targetLog.id);
+            if(log == null)
+                throw new Exception("Invalid Log ID");
+            return await logRepository.Update(log, targetLog);
         }
     }
 }
