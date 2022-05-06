@@ -18,6 +18,9 @@ namespace Newton_FTP_API.Mapper
 
             CreateMap<Models.FTP, DTO.FTP>();
             CreateMap<DTO.FTP, Models.FTP>();
+
+            CreateMap<DAO.FTP, Models.FTP>();
+            CreateMap<Models.FTP, DAO.FTP>();
         }
     }
 }
